@@ -12,6 +12,7 @@ C 1
 """
 sys.stdin = io.StringIO(_INPUT)
 
+from operator import itemgetter
 def partition(A, p, r):
     x = A[r][0]
     i = p - 1
@@ -34,7 +35,21 @@ def main():
     for _ in range(n):
         c, v = map(str, input().split())
         A.append([int(v), c])
+
+    B = sorted(A, key = itemgetter(0))
     quick_sort(A, 0, n - 1)
+
+    stable = True
+    for i in range(n):
+        if A[i][1] != B[i][1]:
+            stable = False
+            break
+    
+    if stable:
+        print('Stable')
+    else:
+        print('Not stable')
+
     for e in A:
         print(e[1] + ' ' + str(e[0]))
 
