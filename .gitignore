@@ -1,4 +1,4 @@
 #ignored files
 practice*.py
-test.cpp
+test*
 a.out
