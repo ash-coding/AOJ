@@ -2,3 +2,4 @@
 practice*.py
 test*
 a.out
+__pycache__
