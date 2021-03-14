@@ -2,23 +2,22 @@ import sys
 import io
 
 _INPUT = """\
-11
-6 4 7 8 9 10
-0 2 6 1
-1 1 2
-2 1 3
-3 1 4
-4 1 5
+13
+0 3 1 4 10
+1 2 2 3
+2 0
+3 0
+4 3 5 6 7
 5 0
-7 0
+6 0
+7 2 8 9
 8 0
 9 0
-10 0
+10 2 11 12
+11 0
+12 0
 """
 sys.stdin = io.StringIO(_INPUT)
-
-import sys
-sys.setrecursionlimit(10000)
 
 class Node:
     def __init__(self):
@@ -26,8 +25,6 @@ class Node:
         self.cnum = 0
         self.children = []
         self.parent = -1
-        self.left = -1
-        self.right = -1
         self.depth = -1
         self.type = ''
 
@@ -47,10 +44,9 @@ def output(Node):
 
 def calculate_depth(tree, id, depth):
     tree[id].depth = depth
-    if tree[id].right != -1:
-        calculate_depth(tree, tree[id].right, depth)
-    if tree[id].left != -1:
-        calculate_depth(tree, tree[id].left, depth + 1)
+    if tree[id].children:
+        for c in tree[id].children:
+            calculate_depth(tree, c, depth + 1)
 
 def main():
     n = int(input())
@@ -70,12 +66,7 @@ def main():
             else:
                 tree[u].children.append(e)
                 tree[e].parent = tree[u].id
-                if j == 2:
-                    tree[u].left = e
-                    temp = e
-                else:
-                    tree[temp].right = e
-                    temp = e
+
     for t in tree:
         if t.parent == -1:
             root = t.id
