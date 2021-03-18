@@ -2,16 +2,12 @@ import sys
 import io
 
 _INPUT = """\
-9
-0 1 4
-1 2 3
+5
+3 4 0
+4 -1 -1
+1 -1 -1
 2 -1 -1
-3 -1 -1
-4 5 8
-5 6 7
-6 -1 -1
-7 -1 -1
-8 -1 -1
+0 1 2
 """
 sys.stdin = io.StringIO(_INPUT)
 
@@ -44,13 +40,11 @@ def calculate_depth(tree, id, depth):
         calculate_depth(tree, tree[id].right, depth + 1)
 
 def calculate_height(tree, id):
-    h1 = 0
-    h2 = 0
     if tree[id].left != -1:
-        h1 = calculate_height(tree, tree[id].left) + 1
+        tree[id].height = max(tree[id].height, calculate_height(tree, tree[id].left) + 1)
     if tree[id].right != -1:
-        h2 = calculate_height(tree, tree[id].right) + 1
-    return max(h1, h2)
+        tree[id].height = max(tree[id].height, calculate_height(tree, tree[id].right) + 1)
+    return tree[id].height
 
 def main():
     n = int(input())
@@ -64,15 +58,15 @@ def main():
         tree[id].id = id
         tree[id].left = left
         tree[id].right = right
-        tree[left].sibling = right
-        tree[right].sibling = left
-        tree[left].parent = id
-        tree[right].parent = id
         if left != -1:
+            tree[left].sibling = right
+            tree[left].parent = id
             tree[id].degree += 1
         if right != -1:
+            tree[right].sibling = left
+            tree[right].parent = id
             tree[id].degree += 1
-
+        
     for t in tree:
         if t.parent == -1:
             root = t.id
