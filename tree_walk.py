@@ -56,13 +56,13 @@ def main():
         if tree[i].parent == -1:
             root = i
     
-    print('Preorder\n', end = '')
+    print('Preorder')
     pre_parse(tree, root)
 
-    print('\nInorder\n', end = '')
+    print('\nInorder')
     in_parse(tree, root)
 
-    print('\nPostorder\n', end = '')
+    print('\nPostorder')
     post_parse(tree, root)
     print('')
 
