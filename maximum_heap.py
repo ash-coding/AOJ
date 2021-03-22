@@ -2,18 +2,33 @@ import sys
 import io
 
 _INPUT = """\
-12
-8 6 11 4 1 9 12 5 7 3 2 10
+10
+4 1 3 2 16 9 10 14 8 7
 """
 sys.stdin = io.StringIO(_INPUT)
 
-import heapq
+def max_heapify(A, n, i):
+    l = 2 * i
+    r = 2 * i + 1
+    if l <= n and A[l] > A[i]:
+        largest = l
+    else:
+        largest = i
+    if r <= n and A[r] > A[largest]:
+        largest = r
+    
+    if largest != i:
+        A[i], A[largest] = A[largest], A[i]
+        max_heapify(A, n, largest)
 
-n = int(input())
-H = list(map(int, input().split()))
+def main():
+    n = int(input())
+    A = list(map(int, input().split()))
+    A = [0] + A
+    for i in range(n // 2, 0, -1):
+        max_heapify(A, n, i)
+    print(' ', end = '')
+    print(*A[1:])
 
-H = list(map(lambda x: x * (-1), H))
-heapq.heapify(H)
-H = list(map(lambda x: x * (-1), H))
-print(' ', end = '')
-print(*H)
+if __name__ == '__main__':
+    main()
