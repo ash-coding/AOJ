@@ -3,4 +3,5 @@ practice*.py
 test*
 a.out
 ALDS*.cpp
+ALDS*.py
 __pycache__
