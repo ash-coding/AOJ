@@ -2,7 +2,7 @@ import sys
 import io
 
 _INPUT = """\
-5 3
+147 105
 """
 sys.stdin = io.StringIO(_INPUT)
 
